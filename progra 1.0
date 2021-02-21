@@ -1,0 +1,12 @@
+a=6
+b=17
+c=b/a
+print(b)
+print(a==5)
+print('a='+str(a))
+print('c='+str(c))
+print('type(a)='+str(type(a)))
+print('type(c)='+str(type(c)))
+c=(round(c))
+print('type(c)='+str(type(c)))
+print(c)
