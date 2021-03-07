@@ -6,15 +6,17 @@ import RPi.GPIO as GPIO
 GPIO.setwarnings(False) 
 GPIO.setmode(GPIO.BOARD)
 # GPIO.setmode( GPIO.BCM)
-GPIO.setup(18, GPIO.OUT)
-GPIO.setup(10, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(16, GPIO.OUT)
+GPIO.setup(12, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 while True: 
-    if GPIO.input(10) == GPIO.HIGH:
+    print("Testing now!")
+    if GPIO.input(12) == GPIO.HIGH:
         print("Button was pushed!")
-        GPIO.output(18, GPIO.HIGH)
+        GPIO.output(16, GPIO.HIGH)
+        print("Sleeping for 3!")
         time.sleep(3)
-        GPIO.output(18, GPIO.LOW)
+        GPIO.output(16, GPIO.LOW)
     
         
 
