@@ -10,29 +10,43 @@ GPIO.setup(CS.GPIO_NURSE_OUTPUT_PIN, GPIO.OUT)
 GPIO.setup(CS.GPIO_PATIENT_INPUT_PIN, GPIO.IN)
 GPIO.setup(CS.GPIO_NURSE_INPUT_PIN, GPIO.IN)
 
-STATE=CS.WAITING
 
+def playAlarmSound():
+    pygame.mixer.init()
+    pygame.mixer.music.load("/usr/share/scratch/Media/Sounds/Effects/WaterRunning.mp3")
+    pygame.mixer.music.play()
+    print("Alarm is sounding!")
+    while pygame.mixer.music.get_busy() == True:
+        continue
+            
 def isPatietButtonPushed():
         number=random.randint(1,10)
         print(number)
-        return number<9
+        return number<2
+
+def isNurseButtonPushed():
+        number=random.randint(1,10)
+        print(number)
+        return number<4
+ 
+STATE=CS.IDLE
 
 while True:
-            if isPatietButtonPushed():
-            STATE=CS.WAITING
-            print('patient button has been pushed ')
-            GPIO.output(CS.GPIO_PATIENT_OUTPUT_PIN, GPIO.HIGH)
-            GPIO.output(CS.GPIO_NURSE_OUTPUT_PIN, GPIO.HIGH)
+    if isPatietButtonPushed():
+        STATE=CS.WAITING
+        print('patient button has been pushed ')
+        GPIO.output(CS.GPIO_PATIENT_OUTPUT_PIN, GPIO.HIGH)
+        GPIO.output(CS.GPIO_NURSE_OUTPUT_PIN, GPIO.HIGH)
                     
 
-        else:
-            print('patient button has not been pushed')
+    else:
+        if isNurseButtonPushed():
+            print('nurse button has been pushed')
             GPIO.output(CS.GPIO_NURSE_OUTPUT_PIN, GPIO.LOW)
             GPIO.output(CS.GPIO_PATIENT_OUTPUT_PIN, GPIO.LOW)
-            STATE=CS.WAITING
+            STATE=CS.IDLE
         
-        def PLAY_AMARM_SOUND
-            if STATE=CS.WAITING
-            play
-            
-        time.sleep=(CS.LIGHT_DELAY)
+    if STATE==CS.WAITING:
+        playAlarmSound()
+    
+    time.sleep(CS.LIGHT_DELAY)
