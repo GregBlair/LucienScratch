@@ -4,11 +4,16 @@ import RPi.GPIO as GPIO
 import pygame
 import constants as CS
 
-GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(CS.GPIO_PATIENT_INPUT_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(CS.GPIO_NURSE_INPUT_PIN,   GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+
+#GPIO.setmode(GPIO.BCM)
 GPIO.setup(CS.GPIO_PATIENT_OUTPUT_PIN, GPIO.OUT)
 GPIO.setup(CS.GPIO_NURSE_OUTPUT_PIN, GPIO.OUT)
-GPIO.setup(CS.GPIO_PATIENT_INPUT_PIN, GPIO.IN)
-GPIO.setup(CS.GPIO_NURSE_INPUT_PIN, GPIO.IN)
+# GPIO.setup(CS.GPIO_PATIENT_INPUT_PIN, GPIO.IN)
+# GPIO.setup(CS.GPIO_NURSE_INPUT_PIN, GPIO.IN)
 
 
 def playAlarmSound():
@@ -20,9 +25,7 @@ def playAlarmSound():
         continue
             
 def isPatietButtonPushed():
-        number=random.randint(1,10)
-        print(number)
-        return number<2
+        return GPIO.input(CS.GPIO_PATIENT_INPUT_PIN) == GPIO.HIGH
 
 def isNurseButtonPushed():
         number=random.randint(1,10)
