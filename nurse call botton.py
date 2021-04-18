@@ -19,7 +19,7 @@ GPIO.setup(CS.GPIO_NURSE_OUTPUT_PIN, GPIO.OUT)
 def playAlarmSound():
     GPIO.output(CS.GPIO_NURSE_OUTPUT_PIN, GPIO.HIGH)
     pygame.mixer.init()
-    pygame.mixer.music.load("/usr/share/scratch/Media/Sounds/Effects/WaterRunning.mp3")
+    pygame.mixer.music.load(CS.ALARM_NOISE)
     pygame.mixer.music.play()
     print("Alarm is sounding!")
     while pygame.mixer.music.get_busy() == True:
