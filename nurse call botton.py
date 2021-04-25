@@ -35,21 +35,22 @@ def isNurseButtonPushed():
 STATE=CS.IDLE
 
 while True:
-    if isPatietButtonPushed():
-        STATE=CS.WAITING
-        print('patient button has been pushed ')
-        GPIO.output(CS.GPIO_PATIENT_OUTPUT_PIN, GPIO.HIGH)
+    if STATE==CS.IDLE:
+        if isPatietButtonPushed():
+            STATE=CS.WAITING
+            print('patient button has been pushed ')
+            GPIO.output(CS.GPIO_PATIENT_OUTPUT_PIN, GPIO.HIGH)
       
                     
 
-    else:
+    elif STATE==CS.WAITING:
         if isNurseButtonPushed():
             print('nurse button has been pushed')
             
             GPIO.output(CS.GPIO_PATIENT_OUTPUT_PIN, GPIO.LOW)
             STATE=CS.IDLE
-        
-    if STATE==CS.WAITING:
-        playAlarmSound()
     
+        else:
+            playAlarmSound()
+            
     time.sleep(CS.LIGHT_DELAY)
