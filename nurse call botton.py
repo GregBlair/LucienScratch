@@ -16,6 +16,11 @@ GPIO.setup(CS.GPIO_NURSE_OUTPUT_PIN, GPIO.OUT)
 # GPIO.setup(CS.GPIO_NURSE_INPUT_PIN, GPIO.IN)
 
 
+patientButtonPushed = False
+def patient_button_callback(channel):
+    print("Patient button callback!")
+    patientButtonPushed = True
+    
 def playAlarmSound():
     GPIO.output(CS.GPIO_NURSE_OUTPUT_PIN, GPIO.HIGH)
     pygame.mixer.init()
@@ -27,11 +32,15 @@ def playAlarmSound():
     GPIO.output(CS.GPIO_NURSE_OUTPUT_PIN, GPIO.LOW)
             
 def isPatietButtonPushed():
-        return GPIO.input(CS.GPIO_PATIENT_INPUT_PIN) == GPIO.HIGH
+    return patientButtonPushed
 
 def isNurseButtonPushed():
-        return GPIO.input(CS.GPIO_NURSE_INPUT_PIN) == GPIO.HIGH
- 
+    return GPIO.input(CS.GPIO_NURSE_INPUT_PIN) == GPIO.HIGH
+
+GPIO.add_event_detect(CS.GPIO_PATIENT_INPUT_PIN,
+                      GPIO.RISING,
+                      callback=patient_button_callback) # Setup event on patient button pin rising edge
+
 STATE=CS.IDLE
 
 while True:
