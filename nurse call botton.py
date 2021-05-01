@@ -19,7 +19,7 @@ GPIO.setup(CS.GPIO_NURSE_OUTPUT_PIN, GPIO.OUT)
 patientButtonPushed = False
 def patient_button_callback(channel):
     print("Patient button callback!")
-    patientButtonPushed = True
+    global patientButtonPushed = True
     
 def playAlarmSound():
     GPIO.output(CS.GPIO_NURSE_OUTPUT_PIN, GPIO.HIGH)
